@@ -1,9 +1,7 @@
 class UserService{
-
     constructor(_userRepo){
         this.userRepo = _userRepo;
     }
-
     
 
     async registerUser(userDetails){

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
+    // all these restrictions are for mongoose not for mongo db
     firstName:{
         // all these are validators
         type:String,
@@ -41,6 +43,16 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps:true
 });
+
+
+userSchema.pre('save', async function(){
+    // you can modify user before saving in db
+    // for changing the password
+    const hashPassword = await bcrypt.hash(this.password,10);
+    this.password = hashPassword;
+    // here 10 is salt value
+    console.log("Exiting pre saved hook and creating user");
+})
 
 const User = mongoose.model("User",userSchema);
 

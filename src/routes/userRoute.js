@@ -8,4 +8,5 @@ const userRouter = express.Router();
 
 userRouter.post('/', createUser);  // Add a route to the router
 
+
 module.exports = userRouter; // Exporting router
