@@ -1,20 +1,20 @@
-const User = require('../schema/userSchema');
-class UserRepo{
-    async findUser(parameters){
+// userRepo.js
+class UserRepo {
+    async findUser(parameters) {
         try {
-            const response = await User.findOne({...parameters});
+            const response = await User.findOne({ ...parameters });
             return response;
         } catch (error) {
             console.log("find user error");
         }
     }
 
-    async create_user(userDetails){
+    async create_user(userDetails) {
         try {
             const response = await User.create(userDetails);
-            return response;       
+            return response;
         } catch (error) {
-            console.log("create user error",error);
+            console.log("create user error", error);
         }
     }
 }
