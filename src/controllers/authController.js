@@ -5,7 +5,11 @@ async function login(req,res){
     // auth Service
     try{
         const loginPayload = req.body;
+
+        console.log(loginPayload);
+
         const response = await loginUser(loginPayload);
+        
         return res.status(200).json({
             success:true,
             message:'Logged in successfully',

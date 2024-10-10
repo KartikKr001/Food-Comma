@@ -3,10 +3,9 @@ const UserService = require("../services/userServices");
 
 async function createUser(req,res){
     console.log(req.body);
-
-    const userService = new UserService(new UserRepo());
     
     try{
+        const userService = new UserService(new UserRepo());
         const response = await userService.registerUser(req.body);
         return res.status(201).json({
             message:"Successfully registered user!",
@@ -19,7 +18,7 @@ async function createUser(req,res){
             message:error.reason,
             success:false,
             data:{},
-            error:error
+            error:error,
         })
         
     }

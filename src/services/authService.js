@@ -8,10 +8,12 @@ const userRepoInstance = new UserRepo();
 
 async function loginUser(authDetails) {
     const email = authDetails.email;
-    const plainPassword = authDetails.plainPassword;
+    const plainPassword = authDetails.password;
 
     // check if user exists
     const user = await userRepoInstance.findUser({ email });
+
+    // user not exist
     if (!user) {
         throw {
             message: "no user exists with given email",
@@ -26,6 +28,9 @@ async function loginUser(authDetails) {
             message: "Invalid Password, please try again!",
             statusCode: "401"
         };
+    }
+    else{
+        console.log("hello world")
     }
 
     // password is validated, create and return token
