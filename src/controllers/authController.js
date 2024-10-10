@@ -1,19 +1,26 @@
 const { loginUser } = require('../services/authService')
-
+const cookie = require('cookie')
 
 async function login(req,res){
     // auth Service
     try{
         const loginPayload = req.body;
 
-        console.log(loginPayload);
-
-        const response = await loginUser(loginPayload);
         
+        const response = await loginUser(loginPayload);
+        // response is token
+
+        // setting the cookie
+        res.cookie('authToken',response,{
+            httpOnly : true,
+            secure : false,
+            maxAge : 7*24*60*60*1000
+        })
+
         return res.status(200).json({
             success:true,
             message:'Logged in successfully',
-            data:response,
+            data:{},
             error:{}
         })
     }
