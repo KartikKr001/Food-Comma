@@ -9,7 +9,9 @@ const userRouter = require('./routes/userRoute');
 const cartRoute = require('./routes/cartRoute');
 const authRoute = require('./routes/authRoute');
 const { isLoggedIn } = require('./validation/authValidator');
-
+const uploader = require('./Middlewares/MulterMiddleware');
+const cloudinary = require('./config/cloudConfig');
+const fs = require('fs/promises') //to access file system
 
 const app = express();
 
@@ -19,10 +21,22 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({extended:true}));
 
+// testing api call for checking isLoggedIn middleware  
 app.get('/ping',isLoggedIn,(req,res)=>{
     console.log(req.body);
     console.log(req.cookies);
     return res.json({message:"pong"});
+})
+
+// testing api call for uploading a single file
+app.post('/photo',uploader.single('incomingFile'),async (req,res)=>{
+    console.log(req.file);
+    const result = await cloudinary.uploader.upload(req.file.path); 
+    console.log("result from cloudinary: ",result);
+
+    // delete uploaded items on server/uploads folder
+    await fs.unlink(req.file.path)
+    return res.json({message : "oK"});
 })
 
 
