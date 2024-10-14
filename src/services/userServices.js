@@ -18,7 +18,7 @@ class UserService{
             throw {reason:"Given email and mobile number already exists",statusCode:400}; 
         }
         // user not found
-            // create
+        // create
         const new_user = await this.userRepo.create_user({
             email:userDetails.email,
             password:userDetails.password,

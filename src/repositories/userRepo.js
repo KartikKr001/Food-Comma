@@ -9,7 +9,7 @@ class UserRepo {
             console.log("find user error");
         }
     }
-
+    
     async create_user(userDetails) {
         try {
             const response = await User.create(userDetails);

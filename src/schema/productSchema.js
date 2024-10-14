@@ -24,16 +24,6 @@ const productSchema = new mongoose.Schema({
         required: true,
         default:'veg'
     },
-    size: { 
-        type: String, 
-        enum: ['Small', 'Medium', 'Large'], 
-        required: true 
-    },
-    crust: { 
-        type: String, 
-        enum: ['Thin', 'Thick', 'Cheese-Stuffed', 'Gluten-Free'], 
-        required: true 
-    },
     toppings:{ 
         type: String 
     },
