@@ -2,6 +2,7 @@ const Product = require('../schema/productSchema')
 
 class ProductRepo{
     async findProduct(parameters){
+        console.log("p: ",parameters);
         try{
             const response = await Product.findOne({...parameters});
             return response;

@@ -9,14 +9,16 @@ class ProductService{
     async registerProduct(productDetails){
         // we check for image in productDetails
         // if there, upload and then give url
-
-        const imagePath = req.imagePath;
+        
+        const imagePath = productDetails.imagePath;
+        console.log("img path: ",imagePath);
         if(imagePath){
             // upload to cloudinary
             try{   
                 const clodudinaryResponse = await cloudinary.uploader.upload(imagePath);
+                console.log("resp: ",clodudinaryResponse)
                 var productImage = clodudinaryResponse.secure_url;
-                await fs.unlink({imagePath});
+                await fs.unlink(imagePath);
             }
             catch(error){
                 console.log(error);

@@ -23,7 +23,7 @@ async function addProduct(req,res){
 
     }catch(error){
         console.log(error);
-        return res.statusCode(error.statusCode).json({
+        return res.status(error.statusCode).json({
             success : false,
             message : error.reason,
             data : {},

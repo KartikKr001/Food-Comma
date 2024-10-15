@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    produceName: { 
+    productName: { 
         type: String, 
         required: [true,"Product name is required"],
         minlength : [5,"Product name must be atleast 5 characters"],
@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
         type: String, 
         minlength : [5,"Product name must be atleast 5 characters"],
     },
-    produceImage: { 
+    productImage: { 
         type: String 
     },
     price: { 

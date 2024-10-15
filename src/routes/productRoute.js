@@ -8,5 +8,7 @@ const uploader = require('../Middlewares/MulterMiddleware');
 const productRouter = express.Router();
 
 productRouter.post('/', uploader.single('productImage') , addProduct);  // Add a route to the router
-
+// get/:id
+// productRouter.get('/:id')
+// delete/:id
 module.exports = productRouter; // Exporting router
