@@ -1,5 +1,8 @@
 const cloudinary = require('../config/cloudConfig')
-const fs = require('fs/promises')
+const fs = require('fs/promises');
+const internalServerError = require('../utils/internalServerError');
+const ProductRepo = require('../repositories/productRepo');
+const NotFound = require('../utils/notFoundError');
 
 class ProductService{
     constructor(_prod_repo){
@@ -22,7 +25,7 @@ class ProductService{
             }
             catch(error){
                 console.log(error);
-                throw {reason : 'Not able to create product',statusCode : 500}
+                throw new internalServerError();
             }
         }
 
@@ -31,6 +34,7 @@ class ProductService{
             ...productDetails,
             productImage : productImage
         });
+
         if(product){
             throw{
                 message: "given product already exists",
@@ -51,6 +55,23 @@ class ProductService{
         }
 
         return new_product;
+    }
+
+
+    async getProductById(productId){
+        const response = await ProductRepo.getProd_id(productId);
+        if(!response){
+            throw NotFound('Product');
+        }
+        return response;
+    }
+
+    async deleteProductById(productId){
+        const response = await ProductRepo.deleteProd_id(productId);
+        if(!response){
+            throw NotFound('Product');
+        }
+        return response;
     }
 }
 

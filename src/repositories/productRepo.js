@@ -1,25 +1,42 @@
-const Product = require('../schema/productSchema')
+const Product = require('../schema/productSchema');
+const BadRequestErrors = require('../utils/badRequestError');
+const internalServerError = require('../utils/internalServerError');
 
 class ProductRepo{
-    async findProduct(parameters){
-        console.log("p: ",parameters);
-        try{
-            const response = await Product.findOne({...parameters});
-            return response;
-        }
-        catch(error){
-            console.log('Product Find error',error);
-        }
-    }
-
-
     async create_product(productDetails){
         try{
             const response = await Product.create(productDetails);
             return response;
         }    
         catch(error){
-            console.log("Error while creating product " , error);
+            if(error.name == 'Validation Error'){
+                const errorMessageList = Object.keys(error.errors).map((property)=>{
+                    return error.errors[property].message;
+                })
+                throw new BadRequestErrors(errorMessageList); 
+            }
+            console.log('Product Find error',error);
+            throw new internalServerError(errorMessageList);
+        }
+    }
+
+    async getProd_id(productId){
+        try {
+            const pro = await Product.findById(productId);
+            return pro;
+        } catch (error) {
+            console.log(error);
+            throw new internalServerError();
+        }
+    }
+
+    async deleteProd_id(productId){
+        try {
+            const pro = await Product.findByIdAndDelete(productId);
+            return pro;
+        } catch (error) {
+            console.log(error);
+            throw new internalServerError();
         }
     }
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const addProduct = require('../controllers/productController');
+const {addProduct, getProduct, deleteProduct} = require('../controllers/productController');
 const uploader = require('../Middlewares/MulterMiddleware');
 
 
@@ -8,7 +8,8 @@ const uploader = require('../Middlewares/MulterMiddleware');
 const productRouter = express.Router();
 
 productRouter.post('/', uploader.single('productImage') , addProduct);  // Add a route to the router
-// get/:id
-// productRouter.get('/:id')
-// delete/:id
+productRouter.get('/:id', getProduct);  // Add a route to the router
+productRouter.delete('/:id', deleteProduct);  // Add a route to the router
+
+
 module.exports = productRouter; // Exporting router

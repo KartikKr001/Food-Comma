@@ -1,5 +1,6 @@
 const ProductService = require('../services/productService')
-const ProductRepo = require('../repositories/productRepo')
+const ProductRepo = require('../repositories/productRepo');
+const AppError = require('../utils/AppError');
 
 async function addProduct(req,res){
     console.log(req.body);
@@ -13,24 +14,96 @@ async function addProduct(req,res){
             category : req.body.category,
             inStock : req.body.inStock
         });
-
-
+        
+        
         return res.status(201).json({
             success : true,
             message : "Successfuly created the product",
             error : {},
         })
-
+        
     }catch(error){
+        if(error instanceof AppError){
+            return res.status(error.statusCode).json({
+                success : false,
+                message : error.message,
+                data : {},
+                error : error
+            });
+        }
         console.log(error);
-        return res.status(error.statusCode).json({
-            success : false,
-            message : error.reason,
+        return res.status(500).json({
+            success:false,
+            message:'something went wrong',
             data : {},
             error : error
-        });
+        })
     }
 }
 
 
-module.exports = addProduct;
+async function getProduct(req,res) {
+    try{
+        const product_service = new ProductService(new ProductRepo());
+        const product = await product_service.getProductById(req.params.id); 
+        return res.status(200).json({
+            success : true,
+            message : "Success",
+            error : error,
+            data : product
+        })
+    }catch(error){
+        if(error instanceof AppError){
+            return res.status(error.statusCode).json({
+                success : false,
+                message : error.message,
+                data : {},
+                error : error
+            });
+        }
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:'something went wrong',
+            data : {},
+            error : error
+        })
+    }
+    
+}
+
+async function deleteProduct(req,res) {
+    try{
+        const product_service = new ProductService(new ProductRepo());
+        const product = await product_service.deleteProductById(req.params.id); 
+        return res.status(200).json({
+            success : true,
+            message : "Success",
+            error : error
+        })
+    }catch(error){
+        if(error instanceof AppError){
+            return res.status(error.statusCode).json({
+                success : false,
+                message : error.message,
+                data : {},
+                error : error
+            });
+        }
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:'something went wrong',
+            data : {},
+            error : error
+        })
+    }
+    
+}
+
+
+module.exports = {
+    addProduct,
+    getProduct,
+    deleteProduct
+}
