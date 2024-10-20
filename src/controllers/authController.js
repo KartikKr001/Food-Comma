@@ -5,7 +5,6 @@ async function login(req,res){
     // auth Service
     try{
         const loginPayload = req.body;
-
         
         const response = await loginUser(loginPayload);
         // response is token

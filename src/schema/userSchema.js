@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,"email is required"],
         minlength:[6,"Password must be of same length"]
+    },
+    role:{
+        type:String,
+        enum : ['ADMIN','USER'],
+        default : 'USER'
     }
 },{
     timestamps:true
