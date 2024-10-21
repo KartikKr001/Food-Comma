@@ -1,8 +1,9 @@
 const Cart = require('../schema/cartSchema')
+const internalServerError = require('../utils/internalServerError');
+
 
 class cartRepo{
     async createCart(userId){
-        console.log("INSIDE CART");
         try{
             const newCart = await Cart.create({
                 user : userId
@@ -20,6 +21,19 @@ class cartRepo{
             throw new internalServerError(errorMessageList);
         }
     } 
+
+    async getCartByUserId(userId){
+        try{
+            const cart = await Cart.findOne({
+                user : userId
+            });
+            return cart;
+        }
+        catch(error){
+            console.log(error);
+            throw new internalServerError(error);
+        }
+    }
 
 }
 
