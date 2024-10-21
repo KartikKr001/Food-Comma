@@ -32,6 +32,7 @@ async function loginUser(authDetails) {
     else{
         console.log("hello world")
     }
+    console.log("Login user: ",user);
     const userRole = user.role || "USER"
     // password is validated, create and return token
     const token = jwt.sign({ email: user.email, id: user._id ,role :userRole}, secret_key, {

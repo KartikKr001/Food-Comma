@@ -32,7 +32,7 @@ async function isLoggedIn(req,res,next){
         // in contoller we may need to see that who has called this
         email : decoded.email,
         id : decoded.id,
-        role : decode.role
+        role : decoded.role
     }
 
     next();
@@ -45,6 +45,7 @@ function isAdmin(req,res,next) {
     // since called after isLogged in 
     // we will recieve user details
     const LoggedInUser = req.user;
+    console.log("Check for admin: ",LoggedInUser);
     if(LoggedInUser.role === "ADMIN"){
         next();
     }

@@ -1,7 +1,6 @@
 const cloudinary = require('../config/cloudConfig')
 const fs = require('fs/promises');
 const internalServerError = require('../utils/internalServerError');
-const ProductRepo = require('../repositories/productRepo');
 const NotFound = require('../utils/notFoundError');
 
 class ProductService{
@@ -30,10 +29,10 @@ class ProductService{
         }
 
          
-        const product = await this.productRepo.findProduct({
+        const product = await this.productRepo.getProductByDetails({
             ...productDetails,
             productImage : productImage
-        });
+        }); 
 
         if(product){
             throw{
@@ -59,15 +58,18 @@ class ProductService{
 
 
     async getProductById(productId){
-        const response = await ProductRepo.getProd_id(productId);
+        console.log("product id: ",productId);
+        console.log(this.productRepo);
+        const response = await this.productRepo.getProd_id(productId);
+        console.log("response found: ",response);   
         if(!response){
-            throw NotFound('Product');
+            throw new NotFound('Product');
         }
         return response;
     }
 
     async deleteProductById(productId){
-        const response = await ProductRepo.deleteProd_id(productId);
+        const response = await productRepo.deleteProd_id(productId);
         if(!response){
             throw NotFound('Product');
         }

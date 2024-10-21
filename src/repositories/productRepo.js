@@ -20,6 +20,16 @@ class ProductRepo{
         }
     }
 
+    async getProductByDetails(productDetails){
+        try {
+            const pro = await Product.findOne(productDetails);
+            return pro;
+        } catch (error) {
+            console.log(error);
+            throw new internalServerError();
+        }
+    }
+
     async getProd_id(productId){
         try {
             const pro = await Product.findById(productId);

@@ -1,8 +1,8 @@
 class UserService{
-    constructor(_userRepo){
+    constructor(_userRepo,_cartRepo){
         this.userRepo = _userRepo;
+        this.cartRepo = _cartRepo;
     }
-    
 
     async registerUser(userDetails){
         // create brand new user in db
@@ -30,6 +30,9 @@ class UserService{
         if(!new_user){
             throw {reason:"Something went wrong cann't create user",statusCode:500};
         }
+
+
+        await this.cartRepo.createCart(new_user._id);
 
         // return details of created user
         return new_user;

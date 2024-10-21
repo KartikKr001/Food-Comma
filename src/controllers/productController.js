@@ -49,7 +49,7 @@ async function getProduct(req,res) {
         return res.status(200).json({
             success : true,
             message : "Success",
-            error : error,
+            error : {},
             data : product
         })
     }catch(error){
@@ -79,7 +79,7 @@ async function deleteProduct(req,res) {
         return res.status(200).json({
             success : true,
             message : "Success",
-            error : error
+            error : {}
         })
     }catch(error){
         if(error instanceof AppError){
