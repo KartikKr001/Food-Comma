@@ -26,7 +26,8 @@ class cartRepo{
         try{
             const cart = await Cart.findOne({
                 user : userId
-            });
+            }).populate('items.product');
+            // .populate is used as join
             return cart;
         }
         catch(error){
