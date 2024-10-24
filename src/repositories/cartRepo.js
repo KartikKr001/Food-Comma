@@ -36,6 +36,24 @@ class cartRepo{
         }
     }
 
+    async clearingCart(userId){
+        try{
+            const cart = await Cart.findById({
+                user : userId
+            });
+            if(!cart){
+                throw new NotFoundError('Cart not found');
+            }
+            cart.items = [];
+            await cart.save();
+            return cart;
+        }
+        catch(error){
+            throw new internalServerError();
+        }
+            
+    }
+
 }
 
 module.exports = cartRepo;
