@@ -13,6 +13,7 @@ const uploader = require('./Middlewares/MulterMiddleware');
 const cloudinary = require('./config/cloudConfig');
 const fs = require('fs/promises'); //to access file system
 const productRoute = require('./routes/productRoute');
+const orderRoute = require('./routes/orderRoute');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use('/users',userRoute); //connects router to server
 app.use('/carts',cartRoute); //connects router to server
 app.use('/auth',authRoute); //connects router to server
 app.use('/products',productRoute); //connects router to server
+app.use('/orders',orderRoute); //connects router to server
 
     
 app.listen(ServerConfig.PORT,async ()=>{
