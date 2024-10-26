@@ -45,6 +45,31 @@ class orderService{
         await this.cartRepo.clearingCart(userId);
         return order;
     }
+
+    async getAllOrdersCreatedByUser(userId){
+        const orders = await this.orderRepo.getOrderByUserId(userId);
+        if(!orders){
+            throw new NotFound('orders');
+        }
+        return orders;
+    }
+
+    async getOrderDetailsById(orderId){
+        const order = await this.orderRepo.getOrderById(orderId);
+        if(!order){
+            throw new NotFound('order');
+        }   
+        return order;
+    }
+
+    async updateOrder(orderId, status){
+        const order = await this.orderRepo.updateOrderStatus(orderId, status);
+        if(!order){
+            throw new NotFound('order');
+        }
+        return order;
+    }
+
 }
 
 module.exports = orderService;

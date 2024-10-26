@@ -1,11 +1,11 @@
-const order = require('../schema/orderSchema')
+const Order = require('../schema/orderSchema')
 const internalServerError = require('../utils/internalServerError');
 
 
 class orderRepo{
     async createNewOrder(orderDetails){
         try{
-            const newOrder = await order.create(orderDetails); 
+            const newOrder = await Order.create(orderDetails); 
             return newOrder
         }
         catch(error){
@@ -20,11 +20,9 @@ class orderRepo{
         }
     } 
 
-    async getorderByorderDetails(orderDetails){
+    async getOrderById(orderId){
         try{
-            const order = await order.findOne({
-                user : orderDetails
-            }).populate('items.product');
+            const order = await Order.findById(orderId).populate('items.product');
             // .populate is used as join
             return order;
         }
@@ -34,22 +32,27 @@ class orderRepo{
         }
     }
 
-    async clearingorder(orderDetails){
+    async updatingOrderStatus(orderId,status){  
         try{
-            const order = await order.findById({
-                user : orderDetails
-            });
-            if(!order){
-                throw new NotFoundError('order not found');
-            }
-            order.items = [];
-            await order.save();
+            const order = await Order.findByIdAndUpdate(orderId,{status : status},{new : true});
             return order;
         }
         catch(error){
+            console.log(error);
             throw new internalServerError();
         }
             
+    }
+
+    async getOrderByUserId(userId){
+        try{
+            const order = await Order.find({user:userId}).populate('items.product');
+            return order;
+        }
+        catch(error){
+            console.log(error);
+            throw new internalServerError();
+        }
     }
 
 }
