@@ -37,8 +37,8 @@ const orderSchema = new mongoose.Schema({
     paymentMethod:{
         type : String,
         required : true,
-        enum : ['cash','card','paypal'],
-        default : 'cash'
+        enum : ['offline','online'],
+        default : 'offline'
     }
 },{
     timestamps : true

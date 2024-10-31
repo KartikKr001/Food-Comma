@@ -38,7 +38,7 @@ class cartRepo{
 
     async clearingCart(userId){
         try{
-            const cart = await Cart.findById({
+            const cart = await Cart.findOne({
                 user : userId
             });
             if(!cart){
@@ -49,6 +49,7 @@ class cartRepo{
             return cart;
         }
         catch(error){
+            console.log("in cart repo");
             throw new internalServerError();
         }
             

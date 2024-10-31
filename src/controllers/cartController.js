@@ -1,9 +1,12 @@
 const cartService = require("../services/cartService")
+const cartRepo = require('../repositories/cartRepo')
 const AppError = require('../utils/AppError');
+const ProductRepo = require("../repositories/productRepo");
 
 async function getCartByUser(req,res){
     try{
-        const cart = await cartService.getCart(req.user.id);
+        const cart_service = new cartService(new cartRepo(),new ProductRepo())
+        const cart = await cart_service.getCart(req.user.id);
         return res.status(200).json({
             success : true,
             data : cart,
@@ -31,7 +34,9 @@ async function getCartByUser(req,res){
 
 async function modifyProductToCart(req,res){
     try{
-        const cart = await cartService.modifyCart(req.user.id,req.params.productId,req.params.operation == 'add');
+        const cart_service = new cartService(new cartRepo(),new ProductRepo())
+        const cart = await cart_service.modifyCart(req.user.id,req.params.productId,req.params.operation == 'add');
+        console.log("hello : ",cart);
         return res.status(200).json({
             success : true,
             data : cart,
@@ -59,7 +64,8 @@ async function modifyProductToCart(req,res){
 
 async function clearCart(req,res){
     try{
-        const cart = await cartService.clearProductsFromCart(req.user.id);
+        const cart_service = new cartService(new cartRepo(),new ProductRepo())
+        const cart = await cart_service.clearProductsFromCart(req.user.id);
 
         return res.status(200).json({
             success : true,

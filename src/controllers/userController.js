@@ -3,11 +3,11 @@ const UserService = require("../services/userServices");
 const cartRepo = require('../repositories/cartRepo')
 
 async function createUser(req,res){
-    console.log(req.body);
-    
+    console.log("req: ",req.body);
     try{
         const userService = new UserService(new UserRepo(),new cartRepo());
         const response = await userService.registerUser(req.body);
+        console.log('user created')
         return res.status(201).json({
             message:"Successfully registered user!",
             success:true,

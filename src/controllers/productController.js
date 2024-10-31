@@ -72,6 +72,36 @@ async function getProduct(req,res) {
     
 }
 
+async function getProducts(req,res) {
+    try{
+        const product_service = new ProductService(new ProductRepo());
+        const products = await product_service.getAllProd(); 
+        return res.status(200).json({
+            success : true,
+            message : "Success",
+            error : {},
+            data : products
+        })
+    }catch(error){
+        if(error instanceof AppError){
+            return res.status(error.statusCode).json({
+                success : false,
+                message : error.message,
+                data : {},
+                error : error
+            });
+        }
+        console.log(error);
+        return res.status(500).json({
+            success:false,
+            message:'something went wrong',
+            data : {},
+            error : error
+        })
+    }
+    
+}
+
 async function deleteProduct(req,res) {
     try{
         const product_service = new ProductService(new ProductRepo());
@@ -105,5 +135,6 @@ async function deleteProduct(req,res) {
 module.exports = {
     addProduct,
     getProduct,
+    getProducts,
     deleteProduct
 }

@@ -1,5 +1,5 @@
 const express = require('express');
-const {addProduct, getProduct, deleteProduct} = require('../controllers/productController');
+const {addProduct, getProduct, deleteProduct, getProducts} = require('../controllers/productController');
 const uploader = require('../Middlewares/MulterMiddleware');
 const {isLoggedIn, isAdmin} = require('../validation/authValidator')
 
@@ -14,6 +14,8 @@ productRouter.post('/',
     addProduct);  // Add a route to the router
 
 productRouter.get('/:id', getProduct);  // Add a route to the router
+productRouter.get('/',getProducts);
+
 
 productRouter.delete('/:id',
     isLoggedIn,

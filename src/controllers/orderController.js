@@ -1,16 +1,22 @@
 const orderService = require('../services/orderService');
 const AppError = require('../utils/AppError');
+const userRepo = require('../repositories/userRepo')
+const orderRepo = require('../repositories/orderRepo')
+const cartRepo = require('../repositories/cartRepo')
 
 async function createNewOrder(req,res){
     try{
+        console.log("req: ",req.body);
         const userId = req.user.id;
-        const order = orderService.createOrder(userId,req.body.paymentMethod);
-        return res.status(200).json({
+        const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
+        const order = await order_service.createOrder(userId,req.body.paymentMethod,req.body.address);
+        console.log("in controller order : ",order);
+        return res.status(201).json({
             message: 'Order created successfully',
             success :  true,
             data: order,
             error : {}
-    });
+        });
     }catch(error){
         console.log(error);
         if(error instanceof AppError){
@@ -21,7 +27,7 @@ async function createNewOrder(req,res){
                 error : error
             });
         }
-        return res.status(500).json({
+        else return res.status(500).json({
             success:false,
             message:'something went wrong',
             data : {},
@@ -34,7 +40,8 @@ async function createNewOrder(req,res){
 async function getAllOrdersByUser(req,res){
     try{
         const userId = req.user.id;
-        const orders = await orderService.getAllOrdersCreatedByUser(userId);
+        const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
+        const orders = await order_service.getAllOrdersCreatedByUser(userId);
 
         return res.status(200).json({
             success : true,
@@ -65,7 +72,8 @@ async function getAllOrdersByUser(req,res){
 
 async function OrderDetails(req,res){
     try{
-        const order = await getOrderDetailsById(req.params.orderId);
+        const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
+        const order = await order_service.getOrderDetailsById(req.params.orderId);
         return res.status(200).json({
             success : true,
             message: 'Order details fetched successfully',
@@ -94,7 +102,8 @@ async function OrderDetails(req,res){
 
 async function cancelOrder(req,res){
     try{
-        const order = await updateOrder(req.params.orderId,'cancelled');
+        const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
+        const order = await order_service.updateOrder(req.params.orderId,'cancelled');
         return res.status(200).json({
             success : true,
             message: 'Order cancelled successfully',
@@ -123,7 +132,8 @@ async function cancelOrder(req,res){
 
 async function changeOrderStatus(req,res){
     try{
-        const order = await updateOrder(req.params.orderId,req.body.status);
+        const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
+        const order = await order_service.updateOrder(req.params.orderId,req.body.status);
         return res.status(200).json({
             success : true,
             message: 'Order status changed successfully',

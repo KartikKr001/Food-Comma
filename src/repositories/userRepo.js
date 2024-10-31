@@ -1,4 +1,5 @@
 const User = require('../schema/userSchema');
+const internalServerError = require('../utils/internalServerError');
 
 class UserRepo {
     async findUser(parameters) {
@@ -16,6 +17,7 @@ class UserRepo {
             return response;
         } catch (error) {
             console.log("create user error", error);
+            throw new internalServerError();
         }
     }
 }

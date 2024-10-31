@@ -3,6 +3,8 @@
 // use NODEMON
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
+
 const ServerConfig = require('./config/ServerConfig');
 const connectDB = require('./config/DbConfig');
 const userRoute = require('./routes/userRoute');
@@ -18,6 +20,10 @@ const orderRoute = require('./routes/orderRoute');
 const app = express();
 
 // middlewares
+app.use(cors({
+    origin : 'http://localhost:5173',
+    credentials : true  // to allow cookies
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.text());

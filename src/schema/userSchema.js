@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     },
     lastName:{
         type:String,
-        required:[true,"last name is required"],
+        // required:[true,"last name is required"],
         minlength:[5,"last name must be atleast 5 character long"],
         lowercase:true,
         trim:true,
@@ -44,10 +44,6 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum : ['ADMIN','USER'],
         default : 'USER'
-    },
-    address : {
-        type : String,
-        required : true
     }
 },{
     timestamps:true

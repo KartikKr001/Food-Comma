@@ -18,11 +18,11 @@ class cartService{
 
 
     async modifyCart(userId,productId,shouldAdd = true){
-        const cart = await getCart(userId);
-        const product = await getProd_id(productId);
-        if(!product.inStock){
-            throw new BadRequestErrors(['Product not available in the stock'])
-        }
+        const cart = await this.getCart(userId);
+        const product = await this.ProductRepo.getProd_id(productId);
+        // if(!product.inStock){
+        //     throw new BadRequestErrors(['Product not available in the stock'])
+        // }
 
         // check for product present in cart
         let foundProduct = false;
@@ -61,6 +61,7 @@ class cartService{
         }
 
         await cart.save();
+        return cart;
     }
 
     async clearProductsFromCart(userId){

@@ -4,9 +4,11 @@ const internalServerError = require('../utils/internalServerError');
 
 class orderRepo{
     async createNewOrder(orderDetails){
+        console.log(orderDetails);
         try{
             const newOrder = await Order.create(orderDetails); 
-            return newOrder
+            console.log(newOrder)
+            return newOrder;
         }
         catch(error){
             if(error.name == 'Validation Error'){
@@ -22,9 +24,9 @@ class orderRepo{
 
     async getOrderById(orderId){
         try{
-            const order = await Order.findById(orderId).populate('items.product');
+            const new_order = await Order.findById(orderId).populate('items.product');
             // .populate is used as join
-            return order;
+            return new_order;
         }
         catch(error){
             console.log(error);
@@ -34,8 +36,8 @@ class orderRepo{
 
     async updatingOrderStatus(orderId,status){  
         try{
-            const order = await Order.findByIdAndUpdate(orderId,{status : status},{new : true});
-            return order;
+            const new_order = await Order.findByIdAndUpdate(orderId,{status : status},{new : true});
+            return new_order;
         }
         catch(error){
             console.log(error);

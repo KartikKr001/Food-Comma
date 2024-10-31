@@ -68,6 +68,14 @@ class ProductService{
         return response;
     }
 
+    async getAllProd(){
+        const response = await this.productRepo.getAllProducts();
+        if(!response){
+            throw new NotFound('Product');
+        }
+        return response;
+    }
+
     async deleteProductById(productId){
         const response = await productRepo.deleteProd_id(productId);
         if(!response){

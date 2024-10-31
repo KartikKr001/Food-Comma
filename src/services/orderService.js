@@ -10,7 +10,7 @@ class orderService{
         this.orderRepo = _orderRepo;
     }
 
-    async createOrder(userId,paymentMethod){
+    async createOrder(userId,paymentMethod,address){
         const cart = await this.cartRepo.getCartByUserId(userId);
         const user = await this.userRepo.findUser(userId);
         if(!cart){
@@ -21,6 +21,7 @@ class orderService{
         }
         const orderObject = {
             user : cart.user,
+            address : address,
             status : "ordered",
             totalPrice : 0
         }
@@ -34,12 +35,12 @@ class orderService{
             orderObject.totalPrice += (pro.quantity)*(pro.product.price)
         )
 
-        orderObject.address = user.address
         orderObject.paymentMethod = paymentMethod
 
         const order = await this.orderRepo.createNewOrder(orderObject);
-
+        console.log("order created : ",order);
         if(!order){
+            console.log("hello")
             throw new internalServerError();
         }
         await this.cartRepo.clearingCart(userId);

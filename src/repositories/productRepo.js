@@ -40,6 +40,18 @@ class ProductRepo{
         }
     }
 
+    async getAllProducts(){
+        try{
+            const products = await Product.find({});
+            return products;
+        }
+        catch(error){
+            console.log(error);
+            throw new internalServerError();
+        }
+    }
+
+
     async deleteProd_id(productId){
         try {
             const pro = await Product.findByIdAndDelete(productId);
