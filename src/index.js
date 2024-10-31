@@ -21,7 +21,7 @@ const app = express();
 
 // middlewares
 app.use(cors({
-    origin : 'https://pizza-frontend-six.vercel.app/',
+    origin : 'https://pizza-frontend-six.vercel.app',
     credentials : true  // to allow cookies
 }));
 app.use(cookieParser());
