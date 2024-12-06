@@ -12,7 +12,8 @@ async function login(req,res){
         // setting the cookie
         res.cookie('authToken',response.token,{
             httpOnly : true,
-            secure : COOKIE_SECURE,
+            secure : true,
+            sameSite : "None",
             maxAge : 7*24*60*60*1000
         })
         console.log("res:" ,res.cookies);

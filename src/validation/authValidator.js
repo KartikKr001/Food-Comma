@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { secret_key } = require('../config/ServerConfig');
 
 async function isLoggedIn(req,res,next){
+    console.log("headers: ",req.headers['authToken']);
     const token = req.cookies['authToken'];
     console.log("cook recieved: ",req.cookies);
     console.log("requesting token: ",token);
