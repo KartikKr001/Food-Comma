@@ -36,7 +36,6 @@ async function modifyProductToCart(req,res){
     try{
         const cart_service = new cartService(new cartRepo(),new ProductRepo())
         const cart = await cart_service.modifyCart(req.user.id,req.params.productId,req.params.operation == 'add');
-        console.log("hello : ",cart);
         return res.status(200).json({
             success : true,
             data : cart,

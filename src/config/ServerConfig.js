@@ -8,5 +8,7 @@ module.exports = {
     JWT_expiry : process.env.JWT_expiry,
     CLOUDINARY_CLOUD_NAME : process.env.CLOUDINARY_CLOUD_NAME,
     CLOUDINARY_API_KEY : process.env.CLOUDINARY_API_KEY,
-    CLOUDINARY_API_SECRET : process.env.CLOUDINARY_API_SECRET
+    CLOUDINARY_API_SECRET : process.env.CLOUDINARY_API_SECRET,
+    COOKIE_SECURE : process.env.COOKIE_SECURE,
+    FRONTEND_URL : process.env.FRONTEND_URL
 }

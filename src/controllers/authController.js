@@ -1,5 +1,7 @@
-const { loginUser } = require('../services/authService')
-const cookie = require('cookie')
+const { COOKIE_SECURE } = require('../config/ServerConfig');
+const { loginUser } = require('../services/authService');
+const cookie = require('cookie');
+
 
 async function login(req,res){
     // auth Controller
@@ -7,21 +9,20 @@ async function login(req,res){
         const loginPayload = req.body;
         // response is token
         const response = await loginUser(loginPayload);
-
         // setting the cookie
         res.cookie('authToken',response.token,{
             httpOnly : true,
-            secure : false,
+            secure : COOKIE_SECURE,
             maxAge : 7*24*60*60*1000
         })
-
+        console.log("res:" ,res.cookies);
         return res.status(200).json({
             success:true,
             message:'Logged in successfully',
             data:{
                 userRole : response.userRole,
                 userData : response.data,
-                cook : req.cookies
+                cookie : response.token
             },
             error:{}
         })

@@ -76,6 +76,7 @@ async function getProducts(req,res) {
     try{
         const product_service = new ProductService(new ProductRepo());
         const products = await product_service.getAllProd(); 
+        console.log("products loaded",products)
         return res.status(200).json({
             success : true,
             message : "Success",

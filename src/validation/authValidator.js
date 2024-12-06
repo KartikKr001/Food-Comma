@@ -3,6 +3,8 @@ const { secret_key } = require('../config/ServerConfig');
 
 async function isLoggedIn(req,res,next){
     const token = req.cookies['authToken'];
+    console.log("cook recieved: ",req.cookies);
+    console.log("requesting token: ",token);
     if(!token){
         return res.status(401).json({
             success : false,
