@@ -16,7 +16,6 @@ async function login(req,res){
             sameSite : "None",
             maxAge : 7*24*60*60*1000
         })
-        console.log("res:" ,res.cookies);
         return res.status(200).json({
             success:true,
             message:'Logged in successfully',
@@ -29,7 +28,8 @@ async function login(req,res){
         })
     }
     catch(error){
-        return res.status(400).json({
+        console.log("error while login: ",error);
+        return res.status(error.statusCode).json({
             success:false,
             data:{},
             message:error.message,

@@ -23,8 +23,10 @@ const app = express();
 app.use(cors({
     // origin : 'https://pizza-frontend-six.vercel.app',
     origin : ServerConfig.FRONTEND_URL,
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials : true  // to allow cookies
 }));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.text());

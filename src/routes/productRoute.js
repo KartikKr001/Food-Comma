@@ -11,7 +11,8 @@ productRouter.post('/',
     isLoggedIn,
     isAdmin,
     uploader.single('productImage') , 
-    addProduct);  // Add a route to the router
+    addProduct
+);  // Add a route to the router
 
 productRouter.get('/:id', getProduct);  // Add a route to the router
 productRouter.get('/',getProducts);
