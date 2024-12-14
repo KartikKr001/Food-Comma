@@ -1,6 +1,7 @@
 const UserRepo = require("../repositories/userRepo");
 const UserService = require("../services/userServices");
-const cartRepo = require('../repositories/cartRepo')
+const cartRepo = require('../repositories/cartRepo');
+const AppError = require('../utils/AppError')
 
 async function createUser(req,res){
     console.log("req: ",req.body);
@@ -15,14 +16,23 @@ async function createUser(req,res){
             error:{}
         })
     }catch(error){
-        console.log("the error is: ",error);
-        return res.status(error.statusCode).json({
-            message:error.reason,
+        console.log("the error is control: ",error);
+        if(error instanceof AppError){
+            return res.status(error.statusCode).json({
+                success : false,
+                message : error.message,
+                data : {},
+                error : error
+            });
+        }
+        else{
+            return res.status(500).json({
             success:false,
-            data:{},
-            error:error,
-        })
-        
+            message:'something went wrong',
+            data : {},
+            error : error
+            })
+        }
     }
 }
 

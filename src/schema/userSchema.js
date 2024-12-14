@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
         maxlength:[20,"last name must be less than or equal to 20 characters"]
     },
     mobileNumber:{
-        type:String,
+        type:Number,
         unique:[true,"Phone number already in use"],
         maxlength:[10,"Phone number must be of length 10"],
         minlength:[10,"Phone number must be of length 10"],

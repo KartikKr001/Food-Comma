@@ -1,3 +1,6 @@
+const BadRequestErrors = require("../utils/badRequestError");
+const internalServerError = require("../utils/internalServerError");
+
 class UserService{
     constructor(_userRepo,_cartRepo){
         this.userRepo = _userRepo;
@@ -15,7 +18,8 @@ class UserService{
         // create user in db
         if(user){
             // we found user
-            throw {reason:"Given email and mobile number already exists",statusCode:400}; 
+            console.log(user)
+            throw new BadRequestErrors(["Given email and mobile number already exists"]);
         }
         // user not found
         // create
@@ -26,15 +30,13 @@ class UserService{
             firstName:userDetails.firstName,
             lastName:userDetails.lastName
         });
-
+        
         if(!new_user){
-            throw {reason:"Something went wrong cann't create user",statusCode:500};
+            throw internalServerError();
         }
 
 
         await this.cartRepo.createCart(new_user._id);
-
-        // return details of created user
         return new_user;
     }
 }

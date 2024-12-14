@@ -6,7 +6,6 @@ const cartRepo = require('../repositories/cartRepo')
 
 async function createNewOrder(req,res){
     try{
-        console.log("req: ",req.body);
         const userId = req.user.id;
         const order_service = new orderService(new userRepo(),new cartRepo(),new orderRepo());
         const order = await order_service.createOrder(userId,req.body.paymentMethod,req.body.address);
@@ -27,12 +26,14 @@ async function createNewOrder(req,res){
                 error : error
             });
         }
-        else return res.status(500).json({
+        else{
+            return res.status(500).json({
             success:false,
             message:'something went wrong',
             data : {},
             error : error
-        })
+            })
+        }
     }
         
 }

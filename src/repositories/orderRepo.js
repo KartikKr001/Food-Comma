@@ -1,5 +1,6 @@
 const Order = require('../schema/orderSchema')
 const internalServerError = require('../utils/internalServerError');
+const BadRequestErrors = require('../utils/badRequestError');
 
 
 class orderRepo{
@@ -11,7 +12,7 @@ class orderRepo{
             return newOrder;
         }
         catch(error){
-            if(error.name == 'Validation Error'){
+            if(error.name == 'ValidationError'){
                 const errorMessageList = Object.keys(error.errors).map((property)=>{
                     return error.errors[property].message;
                 })

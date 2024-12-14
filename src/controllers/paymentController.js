@@ -1,6 +1,6 @@
 const instance = require('../config/RazorpayConfig');
 const crypto = require("crypto");
-
+const ServerConfig = require('../config/ServerConfig')
 
 const checkout = async (req,res)=>{     // create order
     console.log("payment2",req.body);
@@ -32,7 +32,7 @@ const paymentVerification =  (req,res)=>{
         const expectedSignature = crypto.createHmac('sha256', instance.key_secret).update(body.toString()).digest('hex');
         
         if(expectedSignature === razorpay_signature){
-            res.redirect(process.env.FRONTEND_URL + `/order/success?reference=${razorpay_payment_id}`)
+            res.redirect(ServerConfig.FRONTEND_URL + `/order/success?reference=${razorpay_payment_id}`)
         }
         else{
             res.status(400).json({
